@@ -15,5 +15,12 @@ resource "infoblox_network" "env_networks" {
 }
 
 output "networks" {
-  value = infoblox_network.env_networks
+  description = "Detailed network configuration for each environment"
+  value = {
+    for k, v in infoblox_network.env_networks : k => {
+      network      = v.network
+      network_view = v.network_view
+      comment      = v.comment
+    }
+  }
 }

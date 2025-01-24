@@ -32,3 +32,25 @@ resource "infoblox_zone_forward" "cloud_forwards" {
   forward_to   = ["${cidrhost(each.value.network, 2)}"]
   forward_type = "FORWARD_ONLY"
 }
+
+output "allocated_ips" {
+  description = "Map of allocated IPs for services"
+  value = {
+    for k, v in infoblox_ip_allocation.services : k => {
+      ip_address = v.ip_addr
+      fqdn       = v.fqdn
+      dns_view   = v.dns_view
+    }
+  }
+}
+
+output "forwarders" {
+  description = "Configured DNS forwarders"
+  value = {
+    for k, v in infoblox_zone_forward.cloud_forwards : k => {
+      zone         = v.fqdn
+      forward_to   = v.forward_to
+      forward_type = v.forward_type
+    }
+  }
+}
