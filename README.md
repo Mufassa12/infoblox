@@ -110,7 +110,7 @@ environments = {
 
 To add a new environment:
 
-1. Add a new entry to the `environments` variable in `terraform.tfvars`:
+1. Add a new entry to the `environments` variable in your Terraform Cloud workspace:
    ```hcl
    environments = {
      // ...existing environments...

@@ -1,3 +1,0 @@
-infoblox_server   = "grid-manager.example.com"
-infoblox_username = "admin"
-infoblox_password = "your-secure-password"
