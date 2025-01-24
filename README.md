@@ -7,13 +7,22 @@ This Terraform configuration manages DNS and IP address management (IPAM) in Inf
 - Terraform v1.0.0 or later
 - Access to an Infoblox Grid Manager
 - Terraform Cloud account
+- GitHub or other supported VCS account
 - Terraform Infoblox Provider v2.0 or later
 
 ## Terraform Cloud Setup
 
-1. Create a workspace in Terraform Cloud named `infoblox-infrastructure`
+1. Configure VCS Integration:
+   - Go to Terraform Cloud Settings > VCS Providers
+   - Add your VCS provider (GitHub, GitLab, etc.)
+   - Authorize Terraform Cloud to access your repositories
 
-2. Configure the following variables in your Terraform Cloud workspace:
+2. Create a workspace in Terraform Cloud named `infoblox-infrastructure`:
+   - Choose "Version control workflow"
+   - Select your repository
+   - Choose the main/master branch
+
+3. Configure the following variables in your Terraform Cloud workspace:
 
    ### Environment Variables
    - `INFOBLOX_SERVER` - Your Infoblox Grid Manager URL
@@ -45,25 +54,34 @@ This Terraform configuration manages DNS and IP address management (IPAM) in Inf
 
 1. Clone this repository
 
-2. Login to Terraform Cloud:
+2. Make changes and push to your VCS:
    ```bash
-   terraform login
+   git add .
+   git commit -m "Update Infoblox configuration"
+   git push origin main
    ```
 
-3. Initialize Terraform:
-   ```bash
-   terraform init
-   ```
+3. Terraform Cloud will automatically:
+   - Detect the changes
+   - Run a plan
+   - Wait for approval (if required)
+   - Apply the changes
 
-4. Review the planned changes:
-   ```bash
-   terraform plan
-   ```
+## Working with Terraform Cloud and VCS
 
-5. Apply the configuration:
-   ```bash
-   terraform apply
-   ```
+### Workflow
+1. Create a feature branch
+2. Make your changes
+3. Push to VCS
+4. Create a pull request
+5. Review the Terraform plan in the PR
+6. Merge to trigger automatic apply
+
+### Best Practices
+1. Use branch protection rules
+2. Enable mandatory reviews
+3. Require successful plan before merge
+4. Use meaningful commit messages
 
 ## Module Details
 
